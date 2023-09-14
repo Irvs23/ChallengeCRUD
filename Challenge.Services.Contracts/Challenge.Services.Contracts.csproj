@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Challenge.Core.Shared\Challenge.Core.Shared.csproj" />
+    <ProjectReference Include="..\Core.Challenge.Domain\Challenge.Core.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
