@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,7 +56,7 @@ var builder = WebApplication.CreateBuilder(args);
 #endregion
 
 builder.Services.AddDbContext<RepositoryDbContext>(opts =>
-          opts.UseSqlServer(builder.Configuration.GetConnectionString("BiaTransformaDB"), b => { b.UseRowNumberForPaging(); b.MigrationsAssembly("BiaTransforma.Infrastructure.Persistance"); }));
+          opts.UseSqlServer(builder.Configuration.GetConnectionString("Challenge"), b => { b.UseRowNumberForPaging(); b.MigrationsAssembly("Challenge.Infrastructure.Persistance"); }));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
