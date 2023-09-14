@@ -1,4 +1,4 @@
-﻿using Challenge.Core.Domain.Identity;
+﻿
 using Challenge.Core.Shared.DataTransferObjects;
 using Challenge.Services.Contracts;
 using Microsoft.AspNetCore.Identity;

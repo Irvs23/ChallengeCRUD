@@ -2,10 +2,14 @@ using Challenge.Infrastructure.Persistance.DBContext;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+#region JWT Authentication
 
     builder.Services.AddIdentity<IdentityUser, IdentityRole>(opt =>
     {
@@ -34,7 +38,7 @@ var builder = WebApplication.CreateBuilder(args);
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration.GetSection("AppSettings:Token").Value)),
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("AppSettings:Token").Value)),
             ValidateIssuer = false,
             ValidateAudience = false,
             RequireExpirationTime = true
@@ -43,12 +47,15 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services.AddAuthorization(options =>
     {
-        options.AddPolicy("ResourceAccess", policy => policy.Requirements.Add(new ResourceAccessRequirement()));
-        options.AddPolicy("UsuarioAdministrativo", policy => policy.RequireClaim("EsAdministrativo", "true"));
+        //options.AddPolicy("ResourceAccess", policy => policy.Requirements.Add(new ResourceAccessRequirement()));
     });
 
-    builder.Services.AddScoped<IAuthorizationHandler, ResourceAccessHandler>();
+// builder.Services.AddScoped<IAuthorizationHandler, ResourceAccessHandler>();
 
+#endregion
+
+builder.Services.AddDbContext<RepositoryDbContext>(opts =>
+          opts.UseSqlServer(builder.Configuration.GetConnectionString("BiaTransformaDB"), b => { b.UseRowNumberForPaging(); b.MigrationsAssembly("BiaTransforma.Infrastructure.Persistance"); }));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

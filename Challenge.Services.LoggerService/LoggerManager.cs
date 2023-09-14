@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Challenge.Core.Contracts;
 using Serilog;
+using Microsoft.Extensions.Configuration;
+
 
 namespace Challenge.Services.LoggerService;
 
